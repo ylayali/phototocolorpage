@@ -98,10 +98,11 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ imageUrl });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error(error);
+    const errorMessage = error instanceof Error ? error.message : "An internal server error occurred.";
     return NextResponse.json(
-      { error: error.message || "An internal server error occurred." },
+      { error: errorMessage },
       { status: 500 }
     );
   }
